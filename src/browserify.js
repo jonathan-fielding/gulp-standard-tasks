@@ -20,7 +20,8 @@ module.exports = ({
     minify = null,
     fullPaths = null,
     debug = null,
-    bundleName = 'app-bundle.min.js'
+    bundleName = 'app-bundle.min.js',
+    transforms = [babel, hogan, rfolderify]
 }) => {
     let shouldMinify = (mode === 'prod' && minify !== false) || minify === true;
     let shouldFullPaths = (mode === 'dev' && fullPaths !== false) || fullPaths === true;
@@ -43,9 +44,10 @@ module.exports = ({
             b = browserify(opts);
         }
 
-        b.transform(babel);
-        b.transform(hogan);
-        b.transform(rfolderify);
+        transforms.forEach((transform) => {
+            b.transform(transform);
+        });
+
         b.dest = dest;
 
         b.on('log', gutil.log); // output build logs to terminal

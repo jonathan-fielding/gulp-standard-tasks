@@ -1,7 +1,7 @@
 {
   "name": "gulp-standard-tasks",
   "version": "1.0.0",
-  "description": "gulp-tasks is a opinionated set of tasks that can be registered with gulp to quickly enable building of static assets",
+  "description": "gulp-standard-tasks is a opinionated set of tasks that can be registered with gulp to quickly enable building of static assets",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
