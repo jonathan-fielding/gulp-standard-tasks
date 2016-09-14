@@ -46,7 +46,7 @@ module.exports = ({
         nodeBrowserSync.notify('Sass building');
 
         return gulp.src(src)
-        .pipe(plumber({
+        .pipe(gulpif(mode !== 'prod', plumber({
             errorHandler: onError
         }))
         .pipe(gulpif(sourcemapsEnabled, gulpSourcemaps.init()))
