@@ -54,7 +54,7 @@ The `copy` task accepts an object with the following properties:
 * `src`  Standard `gulp` src expression specifying files to be copied
 * `dest` Destination directory
 
-#### Example usage: 
+#### Example usage:
 
 ```
 const gulp = require('gulp');
@@ -83,14 +83,14 @@ The `css` task accepts an object with the following properties:
 
 * `src`  Standard `gulp` src expression
 * `dest` Destination directory,
-* `mode` Development (dev) or Production (prod) mode 
+* `mode` Development (dev) or Production (prod) mode
 * `autoprefixer` Autoprefixer browser expression for what you want to support, **default value** 'last 3 versions'
 * `csso` Enable csso CSS optimisation **default value** true (prod mode), false (dev mode)
 * `sourcemaps` Enable sourcemaps **default value** true (dev mode), false (prod mode)
 * `browserSync` Enable Browsersync **default value** false
-* `rename` Object to be passed to gulp-rename - see [gulp-rename](https://www.npmjs.com/package/gulp-rename#usage) for available options 
+* `rename` Object to be passed to gulp-rename - see [gulp-rename](https://www.npmjs.com/package/gulp-rename#usage) for available options
 
-#### Example usage: 
+#### Example usage:
 
 ```
 const gulp = require('gulp');
@@ -121,7 +121,7 @@ The `svg` task accepts an object with the following properties:
 * `prefix` A prefix the svg filenames will use when referenced in the spritesheet **default value** 'icon-',
 * `removeFill` Option to remove the fill of the SVG so it can be styled using CSS **default value** false
 
-#### Example usage: 
+#### Example usage:
 
 ```
 const gulp = require('gulp');
@@ -140,7 +140,7 @@ Reusable task for compiling JavaScript using browserify
 
 #### Options
 
-The `svg` task accepts an object with the following properties:
+The `browserify` task accepts an object with the following properties:
 
 * `src`  Standard `gulp` src expression
 * `dest` Destination directory,
@@ -150,7 +150,7 @@ The `svg` task accepts an object with the following properties:
 * `minify` Should JavaScript be minified using uglify **default value** true (prod mode), false (dev mode)
 * `fullPaths` Should Browserify include the full paths to the modules it has included (needed for tools such as discify that do deep package inspection) **default value** true (dev mode), false (prod mode)
 
-#### Example usage: 
+#### Example usage:
 
 ```
 const gulp = require('gulp');
@@ -168,7 +168,7 @@ gulp.task('browserify', tasks.browserify({
 
 To use the Jekyll builder you will need to have first installed the Jekyll Ruby Gem. This task will wrap the Ruby Gem to enable Jeyll builds to be controlled by Gulp.
 
-#### Example usage: 
+#### Example usage:
 
 ```
 const gulp = require('gulp');
@@ -180,13 +180,13 @@ gulp.task('jekyll-build', tasks.jekyll.build);
 
 ### Browsersync
 
-A Browsersync instance is exposed by gulp-standard-tasks so that this instance can be shared between tasks. 
+A Browsersync instance is exposed by gulp-standard-tasks so that this instance can be shared between tasks.
 
 #### Options
 
 `gulp-standard-tasks` exposes an instance of Browsersync. This means any of the functionality documented on the [Browsersync website](https://www.browsersync.io/) can be used when using this module.
 
-#### Example usage: 
+#### Example usage:
 
 This example shows how you might use Browsersync in conjunction with Jekyll to reload the content after Jekyll has rebuilt the page.
 
@@ -208,7 +208,7 @@ gulp.task('jekyll-rebuild', ['jekyll-build'], () => tasks.browserSync.reload());
 
 ```
 
-## Contributing 
+## Contributing
 
 gulp-standard-tasks is maintained by Beamly and is closed to outside contributions.
 
