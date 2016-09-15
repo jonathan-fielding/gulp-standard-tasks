@@ -49,7 +49,7 @@ module.exports = ({
         return gulp.src(src)
         .pipe(gulpif(exitOnError === false, plumber({
             errorHandler: onError
-        }))
+        })))
         .pipe(gulpif(sourcemapsEnabled, gulpSourcemaps.init()))
         .pipe(sass(customSassOptions))
         .pipe(postcss(processors))
