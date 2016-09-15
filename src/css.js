@@ -23,6 +23,7 @@ module.exports = ({
     src = 'src',
     dest = 'dest',
     mode = 'dev',
+    exitOnError = false,
     autoprefixer = 'last 3 versions',
     csso = null,
     sourcemaps = null,
@@ -46,7 +47,7 @@ module.exports = ({
         nodeBrowserSync.notify('Sass building');
 
         return gulp.src(src)
-        .pipe(plumber({
+        .pipe(gulpif(exitOnError === false, plumber({
             errorHandler: onError
         }))
         .pipe(gulpif(sourcemapsEnabled, gulpSourcemaps.init()))
