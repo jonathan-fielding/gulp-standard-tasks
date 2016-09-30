@@ -1,6 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
+const gulpif = require('gulp-if');
 const watchify = require('watchify');
 const browserify = require('browserify');
 const vinylSourceStream = require('vinyl-source-stream');
@@ -11,6 +12,7 @@ const babel = require('babelify');
 const hogan = require('browserify-hogan');
 const rfolderify = require('rfolderify');
 const uglify = require('gulp-uglify');
+const nodeBrowserSync = require('browser-sync');
 
 module.exports = ({
     src = '',
@@ -21,6 +23,7 @@ module.exports = ({
     fullPaths = null,
     debug = null,
     bundleName = 'app-bundle.min.js',
+    browserSync = false,
     transforms = [babel, hogan, rfolderify]
 }) => {
     let shouldMinify = (mode === 'prod' && minify !== false) || minify === true;
@@ -39,7 +42,7 @@ module.exports = ({
 
         if (watch) {
             b = watchify(browserify(opts));
-            b.on('update', () => bundle(b, bundleName)); // on any dep update, runs the bundler
+            b.on('update', () => bundle(b, bundleName, browserSync)); // on any dep update, runs the bundler
         } else {
             b = browserify(opts);
         }
@@ -52,11 +55,11 @@ module.exports = ({
 
         b.on('log', gutil.log); // output build logs to terminal
 
-        return bundle(b, bundleName);
+        return bundle(b, bundleName, browserSync);
     };
 };
 
-function bundle(b, bundleName) {
+function bundle(b, bundleName, browserSync) {
     return b.bundle()
         // log errors if they happen
         .on('error', gutil.log.bind(gutil, 'Browserify Error'))
@@ -70,5 +73,8 @@ function bundle(b, bundleName) {
         })) // loads map from browserify file
         // Add transformation tasks to the pipeline here.
         .pipe(sourcemaps.write('./')) // writes .map file
+        .pipe(gulpif(browserSync, nodeBrowserSync.reload({
+            stream: true
+        })))
         .pipe(gulp.dest(b.dest));
 }
