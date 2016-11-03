@@ -4,9 +4,12 @@ const gulp = require('gulp');
 const svgSprite = require('gulp-svg-sprite');
 const svgmin = require('gulp-svgmin');
 const cheerio = require('gulp-cheerio');
+const svgstore = require('gulp-svgstore');
 const gulpif = require('gulp-if');
+const gulpRename = require('gulp-rename');
 
 module.exports = ({
+    mode = null,
     src = null,
     dest = null,
     prefix = 'icon-',
@@ -14,46 +17,70 @@ module.exports = ({
     spriteName = 'sprite',
     scssPath = '_sprite.scss'
 }) => {
-    return () => {
-        return gulp.src(src).pipe(gulpif(removeFill, cheerio({
+    if (mode === 'use') {
+        return () => gulp.src(src).pipe(cheerio({
             run: ($) => {
                 $('[fill]').removeAttr('fill');
             },
-            parserOptions: { xmlMode: true }
-        })))
+
+            parserOptions: {
+                xmlMode: true,
+            },
+        }))
+        .pipe(gulpRename({prefix: prefix}))
         .pipe(svgmin({
             plugins: [{
                 cleanupIDs: {
                     prefix: prefix,
-                    minify: true
-                }
-            }]
+                    minify: true,
+                },
+            }],
         }))
-        .pipe(svgSprite({
-            shape: {
-                spacing: {
-                    padding: 5
-                }
-            },
-            mode: {
-                css: {
-                    commonName: 'test',
-                    dest: `./`,
-                    layout: 'diagonal',
-                    sprite: `${dest}/${spriteName}.svg`,
-                    bust: false,
-                    render: {
-                        scss: {
-                            dest: scssPath,
-                            template: `${__dirname}/templates/sprite-template.scss`
+        .pipe(svgstore())
+        .pipe(gulp.dest(dest));
+    }
+    else {
+        return () => {
+            return gulp.src(src).pipe(gulpif(removeFill, cheerio({
+                run: ($) => {
+                    $('[fill]').removeAttr('fill');
+                },
+                parserOptions: { xmlMode: true }
+            })))
+            .pipe(svgmin({
+                plugins: [{
+                    cleanupIDs: {
+                        prefix: prefix,
+                        minify: true
+                    }
+                }]
+            }))
+            .pipe(svgSprite({
+                shape: {
+                    spacing: {
+                        padding: 5
+                    }
+                },
+                mode: {
+                    css: {
+                        commonName: 'test',
+                        dest: `./`,
+                        layout: 'diagonal',
+                        sprite: `${dest}/${spriteName}.svg`,
+                        bust: false,
+                        render: {
+                            scss: {
+                                dest: scssPath,
+                                template: `${__dirname}/templates/sprite-template.scss`
+                            }
                         }
                     }
+                },
+                variables: {
+                    mapname: spriteName
                 }
-            },
-            variables: {
-                mapname: spriteName
-            }
-        }))
-        .pipe(gulp.dest(process.cwd()));
-    };
+            }))
+            .pipe(gulp.dest(process.cwd()));
+        };
+    }
 };
