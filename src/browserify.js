@@ -66,12 +66,12 @@ function bundle(b, bundleName, browserSync) {
         .pipe(vinylSourceStream(bundleName))
         // optional, remove if you don't need to buffer file contents
         .pipe(vinylBuffer())
-        .pipe(uglify())
         // optional, remove if you dont want sourcemaps
         .pipe(sourcemaps.init({
             loadMaps: true
         })) // loads map from browserify file
-        // Add transformation tasks to the pipeline here.
+	.pipe(uglify())
+         // Add transformation tasks to the pipeline here.
         .pipe(sourcemaps.write('./')) // writes .map file
         .pipe(gulpif(browserSync, nodeBrowserSync.reload({
             stream: true
