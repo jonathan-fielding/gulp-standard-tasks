@@ -55,11 +55,11 @@ module.exports = ({
 
         b.on('log', gutil.log); // output build logs to terminal
 
-        return bundle(b, bundleName, browserSync);
+        return bundle(b, bundleName, browserSync, opts);
     };
 };
 
-function bundle(b, bundleName, browserSync) {
+function bundle(b, bundleName, browserSync, opts) {
     return b.bundle()
         // log errors if they happen
         .on('error', gutil.log.bind(gutil, 'Browserify Error'))
@@ -70,7 +70,7 @@ function bundle(b, bundleName, browserSync) {
         .pipe(sourcemaps.init({
             loadMaps: true
         })) // loads map from browserify file
-	.pipe(uglify())
+        .pipe(gulpif(opts.minify, uglify()))
          // Add transformation tasks to the pipeline here.
         .pipe(sourcemaps.write('./')) // writes .map file
         .pipe(gulpif(browserSync, nodeBrowserSync.reload({
