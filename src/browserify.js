@@ -42,7 +42,7 @@ module.exports = ({
 
         if (watch) {
             b = watchify(browserify(opts));
-            b.on('update', () => bundle(b, bundleName, browserSync)); // on any dep update, runs the bundler
+            b.on('update', () => bundle(b, bundleName, browserSync, opts)); // on any dep update, runs the bundler
         } else {
             b = browserify(opts);
         }
