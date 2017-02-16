@@ -37,6 +37,7 @@ module.exports = ({
             }],
         }))
         .pipe(svgstore())
+        .pipe(gulpRename(`${spriteName}.svg`))
         .pipe(gulp.dest(dest));
     }
     else {
