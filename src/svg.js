@@ -18,7 +18,7 @@ module.exports = ({
     scssPath = '_sprite.scss'
 }) => {
     if (mode === 'use') {
-        return () => gulp.src(src).pipe(cheerio({
+        return () => gulp.src(src).pipe(gulpif(removeFill, cheerio({
             run: ($) => {
                 $('[fill]').removeAttr('fill');
             },
@@ -26,7 +26,7 @@ module.exports = ({
             parserOptions: {
                 xmlMode: true,
             },
-        }))
+        })))
         .pipe(gulpRename({prefix: prefix}))
         .pipe(svgmin({
             plugins: [{
