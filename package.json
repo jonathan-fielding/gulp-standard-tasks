@@ -1,6 +1,6 @@
 {
   "name": "gulp-standard-tasks",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "gulp-standard-tasks is a opinionated set of tasks that can be registered with gulp to quickly enable building of static assets",
   "main": "index.js",
   "scripts": {
