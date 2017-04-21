@@ -50,6 +50,7 @@ module.exports = ({
         .pipe(gulpif(exitOnError === false, plumber({
             errorHandler: onError
         })))
+        .pipe(gulpRename(rename))
         .pipe(gulpif(sourcemapsEnabled, gulpSourcemaps.init()))
         .pipe(sass(customSassOptions))
         .pipe(postcss(processors))
@@ -57,7 +58,6 @@ module.exports = ({
         .pipe(gulpif(browserSync, nodeBrowserSync.reload({
             stream: true
         })))
-        .pipe(gulpRename(rename))
         .pipe(gulp.dest(dest));
     };
 };
