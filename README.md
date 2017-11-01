@@ -208,6 +208,12 @@ gulp.task('jekyll-rebuild', ['jekyll-build'], () => tasks.browserSync.reload());
 
 ```
 
+## Release Log
+
+*** 2.0.1 - 1st November 2017 ***
+Upgraded all the dependencies so that `gulp-standard-tasks` would be compatible with Node 8. As many of the dependencies had Major version changes it made sense to do this as a breaking change to indicate this.
+
+
 ## Contributing
 
 gulp-standard-tasks is maintained by Beamly and is closed to outside contributions.
