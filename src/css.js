@@ -29,15 +29,19 @@ module.exports = ({
     sourcemaps = null,
     browserSync = false,
     rename = {},
-    customSassOptions = {}
+    customSassOptions = {},
+    optimiseMQ = true
 }) => {
     const sourcemapsEnabled = (mode === 'dev' && sourcemaps !== false) || sourcemaps === true;
     const cssoEnabled = (mode === 'prod' && csso !== false) || csso === true;
 
     let processors = [
-        autoprefixerPostCSS({browsers: [autoprefixer]}),
-        mqpackerPostCSS()
+        autoprefixerPostCSS({browsers: [autoprefixer]})
     ];
+    
+    if (optimiseMQ) {
+        processors.push(mqpackerPostCSS());
+    }
 
     if (cssoEnabled) {
         processors.push(cssoPostCSS())
