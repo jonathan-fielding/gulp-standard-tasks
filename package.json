@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -fr dist && node ./node_modules/babel-cli/bin/babel --presets es2015 src -d dist && cp -r src/templates dist/templates"
+    "build": "rm -fr dist && node ./node_modules/babel-cli/bin/babel --presets es2015 src -d dist && cp -r src/templates dist/templates",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -54,6 +56,8 @@
     "run-sequence": "^2.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
-  }
+    "watchify": "^3.7.0",
+    "snyk": "^1.161.1"
+  },
+  "snyk": true
 }
